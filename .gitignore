@@ -4,3 +4,8 @@ cypress/screenshots/
 cypress/videos/
 cypress/downloads/
 .env
+
+# Mobile
+mobile/node_modules/
+mobile/allure-results/
+mobile/allure-report/

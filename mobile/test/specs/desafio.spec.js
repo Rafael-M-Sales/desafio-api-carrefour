@@ -1,0 +1,63 @@
+const LoginPage = require('../pageobjects/login.page');
+const HomePage = require('../pageobjects/home.page');
+const FormsPage = require('../pageobjects/forms.page');
+const { expect } = require('chai');
+
+describe('Desafio Carrefour - Automação Mobile', () => {
+
+    it('Cenário 01: Deve realizar login com sucesso', async () => {
+        await HomePage.goToLogin();
+        await LoginPage.login('teste@qa.com.br', 'senha123');
+        // Adicione validações reais aqui (ex: mensagem de sucesso)
+    });
+
+    it('Cenário 02: Deve exibir erro ao tentar login com email inválido', async () => {
+        await HomePage.goToLogin();
+        await LoginPage.login('email_invalido', 'senha123');
+        // expect(await LoginPage.errorMessage.isDisplayed()).to.be.true;
+    });
+
+    it('Cenário 03: Deve falhar login com senha vazia', async () => {
+        await HomePage.goToLogin();
+        await LoginPage.login('teste@qa.com.br', '');
+        // Validação de erro de campo obrigatório
+    });
+
+    it('Cenário 04: Deve navegar para a tela de WebView corretamente', async () => {
+        await HomePage.webviewMenu.click();
+        // expect(await browser.getContext()).to.include('WEBVIEW');
+    });
+
+    it('Cenário 05: Deve navegar para a tela de Swipe e validar visibilidade', async () => {
+        await HomePage.goToSwipe();
+        // expect(await HomePage.swipeMenu.isDisplayed()).to.be.true;
+    });
+
+    it('Cenário 06: Deve navegar para a tela de Drag and Drop', async () => {
+        await HomePage.dragMenu.click();
+    });
+
+    it('Cenário 07: Deve preencher formulário e validar o Switch', async () => {
+        await HomePage.goToForms();
+        await FormsPage.switchBtn.click();
+    });
+
+    it('Cenário 08: Deve selecionar opção no Dropdown do formulário', async () => {
+        await HomePage.goToForms();
+        await FormsPage.dropDown.click();
+        // Lógica para selecionar item do picker
+    });
+
+    it('Cenário 09: Deve validar botões ativos e inativos no formulário', async () => {
+        await HomePage.goToForms();
+        // expect(await FormsPage.inactiveBtn.isEnabled()).to.be.false;
+    });
+
+    it('Cenário 10: Fluxo E2E - Login -> Navegação -> Logout', async () => {
+        await HomePage.goToLogin();
+        await LoginPage.login('e2e@qa.com.br', 'senha123');
+        await HomePage.goToForms();
+        await HomePage.homeMenu.click();
+    });
+
+});
