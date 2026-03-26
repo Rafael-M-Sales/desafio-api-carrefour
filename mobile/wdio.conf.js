@@ -22,8 +22,10 @@ exports.config = {
         platformName: 'Android',
         'appium:deviceName': 'Android Emulator',
         'appium:automationName': 'UiAutomator2',
-        'appium:app': path.join(process.cwd(), './app/wdio-demo.apk'), // Localização sugerida do APK
+        'appium:app': path.join(process.cwd(), './app/wdio-demo.apk'),
+        'appium:appWaitActivity': 'com.wdiodemoapp.MainActivity',
         'appium:newCommandTimeout': 240,
+        'appium:adbExecTimeout': 60000
     }],
     logLevel: 'info',
     bail: 0,
