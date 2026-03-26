@@ -38,7 +38,20 @@ class LoginPage extends Page {
     }
 
     async isLoginSuccessful() {
+        await this.successMessage.waitForDisplayed({ timeout: 10000 });
         return await this.successMessage.isDisplayed();
+    }
+
+    async dismissSuccessAlert() {
+        if (await this.successOkButton.isDisplayed()) {
+            await this.successOkButton.click();
+        } else {
+            try {
+                await browser.acceptAlert();
+            } catch (e) {
+                // Silently fail if no alert to accept
+            }
+        }
     }
 }
 

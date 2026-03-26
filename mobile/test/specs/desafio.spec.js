@@ -26,8 +26,8 @@ describe('Desafio Carrefour - Automação Mobile', () => {
         // Validação: Verificamos se a mensagem de sucesso está visível.
         expect(await LoginPage.isLoginSuccessful()).to.be.true;
         
-        // Fechar o alerta para não interferir nos próximos testes.
-        await LoginPage.successOkButton.click();
+        // Limpar o alerta robustamente.
+        await LoginPage.dismissSuccessAlert();
     });
 
     /**
@@ -111,11 +111,12 @@ describe('Desafio Carrefour - Automação Mobile', () => {
         // 1. Vai para Login
         await HomePage.goToLogin();
         await LoginPage.login('e2e@qa.com.br', 'senha123456');
-        await LoginPage.successOkButton.click();
+        await LoginPage.dismissSuccessAlert();
 
         // 2. Vai para Forms
         await HomePage.goToForms();
         await FormsPage.fillForm('Desafio Carrefour');
+        await FormsPage.okBtn.waitForDisplayed({ timeout: 10000 });
         await FormsPage.okBtn.click();
 
         // 3. Volta para Home
