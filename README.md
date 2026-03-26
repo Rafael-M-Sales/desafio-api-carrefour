@@ -24,7 +24,10 @@ Projeto de automação de testes para a API [ServeRest](https://serverest.dev), 
 |---|---|---|
 | **Node.js** | >= 18 | Runtime JavaScript |
 | **Cypress** | 13.x | Framework de testes de API |
-| **Mochawesome** | 7.x | Gerador de relatórios HTML |
+| **WebDriverIO** | 8.x | Framework de testes Mobile |
+| **Appium** | 2.x | Driver de automação Mobile |
+| **Mochawesome** | 7.x | Relatórios de API |
+| **Allure Report** | 2.x | Relatórios de Mobile |
 | **GitHub Actions** | - | Pipeline de CI/CD |
 
 ---
@@ -95,23 +98,27 @@ desafio-api-carrefour/
 │   └── workflows/
 │       └── ci.yml                   # Pipeline GitHub Actions
 ├── cypress/
-│   ├── e2e/
-│   │   ├── login.cy.js              # Testes POST /login
-│   │   ├── usuarios-get.cy.js       # Testes GET /usuarios
-│   │   ├── usuarios-post.cy.js      # Testes POST /usuarios
-│   │   ├── usuarios-put.cy.js       # Testes PUT /usuarios/{id}
-│   │   ├── usuarios-delete.cy.js    # Testes DELETE /usuarios/{id}
-│   │   └── usuarios-e2e.cy.js       # Fluxo E2E completo (CRUD)
-│   ├── fixtures/
-│   │   └── usuarios.json            # Massa de dados para testes
-│   └── support/
-│       ├── commands.js              # Comandos customizados
-│       └── e2e.js                   # Arquivo de suporte
-├── cypress.config.js                # Configuração do Cypress
-├── package.json                     # Dependências e scripts
+│   ├── e2e/                         # Testes de API (Cypress)
+│   └── ...
+├── mobile/                          # Testes Mobile (WebDriverIO)
+│   ├── test/
+│   │   ├── pageobjects/             # Padrão Page Object
+│   │   └── specs/                   # 10 Cenários de Teste
+│   └── wdio.conf.js                 # Configuração Appium
+├── cypress.config.js
+├── package.json
 ├── .gitignore
 └── README.md
 ```
+
+---
+
+## 👨‍🏫 Foco Educativo e Didático
+
+Este projeto foi construído com um **viés pedagógico**. Cada arquivo de teste (API e Mobile) contém comentários detalhados que explicam:
+- **Mapeamento de Requisitos**: Qual critério do desafio está sendo validado.
+- **Decisões Técnicas**: Por que certas abordagens (como Page Objects ou Hooks) foram utilizadas.
+- **Melhores Práticas**: Dicas sobre manutenção de código e massa de dados.
 
 ---
 
