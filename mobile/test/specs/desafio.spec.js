@@ -96,8 +96,10 @@ describe('Desafio Carrefour - Automação Mobile', () => {
         await HomePage.goToForms();
         await FormsPage.dropDown.click();
         
-        // Nota: Em Android, interações com listagens nativas podem exigir scroll ou UiSelector.
-        // Aqui simulamos a abertura do seletor.
+        // Selecionamos a opção para fechar o menu e não bloquear a tela
+        const option = await $('//android.widget.CheckedTextView[@text="webdriver.io is awesome"]');
+        await option.waitForDisplayed({ timeout: 10000 });
+        await option.click();
     });
 
     it('Cenário 09: Deve validar botões ativos e inativos no formulário', async () => {
