@@ -19,6 +19,12 @@ describe('Desafio Carrefour - Automação Mobile', () => {
      * REQUISITO: Criar cenários que cubram Login e validações.
      * Técnica: Uso de Page Objects para abstrair seletores e esconder detalhes de implementação.
      */
+    before(async () => {
+        // Pausa inicial generosa para garantir que o emulador carregou o app 100%
+        // em ambientes Windows que podem ser mais lentos.
+        await browser.pause(5000);
+    });
+
     it('Cenário 01: Deve realizar login com sucesso', async () => {
         await HomePage.goToLogin();
         await LoginPage.login('teste@qa.com.br', 'senha123456');
