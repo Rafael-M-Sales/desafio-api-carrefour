@@ -1,0 +1,246 @@
+# 🧪 Desafio de Automação de Testes de API — Carrefour Banco
+
+Projeto de automação de testes para a API [ServeRest](https://serverest.dev), desenvolvido como parte do desafio técnico do **Carrefour Banco**. O projeto cobre testes automatizados para os endpoints de **Usuários** e **Login**, com pipeline de CI/CD e geração de relatórios.
+
+---
+
+## 📋 Índice
+
+- [Tecnologias Utilizadas](#-tecnologias-utilizadas)
+- [Pré-requisitos](#-pré-requisitos)
+- [Instalação e Configuração](#-instalação-e-configuração)
+- [Executando os Testes](#-executando-os-testes)
+- [Estrutura do Projeto](#-estrutura-do-projeto)
+- [Casos de Teste Cobertos](#-casos-de-teste-cobertos)
+- [CI/CD — GitHub Actions](#-cicd--github-actions)
+- [Relatórios de Teste](#-relatórios-de-teste)
+
+---
+
+## 🛠 Tecnologias Utilizadas
+
+| Tecnologia | Versão | Descrição |
+|---|---|---|
+| **Node.js** | >= 18 | Runtime JavaScript |
+| **Cypress** | 13.x | Framework de testes de API |
+| **Mochawesome** | 7.x | Gerador de relatórios HTML |
+| **GitHub Actions** | - | Pipeline de CI/CD |
+
+---
+
+## ✅ Pré-requisitos
+
+- [Node.js](https://nodejs.org/) versão 18 ou superior
+- [npm](https://www.npmjs.com/) (instalado junto com o Node.js)
+- [Git](https://git-scm.com/)
+- Conexão com a internet (a API ServeRest é pública: `https://serverest.dev`)
+
+---
+
+## 🚀 Instalação e Configuração
+
+1. **Clone o repositório:**
+
+```bash
+git clone https://github.com/Rafael-M-Sales/desafio-api-carrefour.git
+cd desafio-api-carrefour
+```
+
+2. **Instale as dependências:**
+
+```bash
+npm install
+```
+
+---
+
+## ▶️ Executando os Testes
+
+### Executar todos os testes (modo headless)
+
+```bash
+npm test
+```
+
+### Abrir o Cypress (modo interativo)
+
+```bash
+npm run test:headed
+```
+
+### Executar testes de um arquivo específico
+
+```bash
+npx cypress run --spec cypress/e2e/login.cy.js
+npx cypress run --spec cypress/e2e/usuarios-post.cy.js
+```
+
+### Gerar relatório HTML após execução
+
+```bash
+npm test
+npm run report
+```
+
+O relatório será gerado em `cypress/reports/html/`.
+
+---
+
+## 📁 Estrutura do Projeto
+
+```
+desafio-api-carrefour/
+├── .github/
+│   └── workflows/
+│       └── ci.yml                   # Pipeline GitHub Actions
+├── cypress/
+│   ├── e2e/
+│   │   ├── login.cy.js              # Testes POST /login
+│   │   ├── usuarios-get.cy.js       # Testes GET /usuarios
+│   │   ├── usuarios-post.cy.js      # Testes POST /usuarios
+│   │   ├── usuarios-put.cy.js       # Testes PUT /usuarios/{id}
+│   │   ├── usuarios-delete.cy.js    # Testes DELETE /usuarios/{id}
+│   │   └── usuarios-e2e.cy.js       # Fluxo E2E completo (CRUD)
+│   ├── fixtures/
+│   │   └── usuarios.json            # Massa de dados para testes
+│   └── support/
+│       ├── commands.js              # Comandos customizados
+│       └── e2e.js                   # Arquivo de suporte
+├── cypress.config.js                # Configuração do Cypress
+├── package.json                     # Dependências e scripts
+├── .gitignore
+└── README.md
+```
+
+---
+
+## 🧾 Casos de Teste Cobertos
+
+### 🔐 Login (`POST /login`)
+
+| # | Cenário | Status Esperado |
+|---|---|---|
+| 1 | Login com credenciais válidas | 200 |
+| 2 | Login com email inválido | 401 |
+| 3 | Login com senha inválida | 401 |
+| 4 | Login sem campo email | 400 |
+| 5 | Login sem campo password | 400 |
+| 6 | Login com corpo da requisição vazio | 400 |
+
+### 📋 Listar Usuários (`GET /usuarios`)
+
+| # | Cenário | Status Esperado |
+|---|---|---|
+| 1 | Listar todos os usuários | 200 |
+| 2 | Validar schema dos usuários | 200 |
+| 3 | Filtrar por nome | 200 |
+| 4 | Filtrar por email | 200 |
+| 5 | Filtrar com resultado vazio | 200 |
+| 6 | Buscar por ID válido | 200 |
+| 7 | Buscar por ID inexistente | 400 |
+
+### ➕ Criar Usuário (`POST /usuarios`)
+
+| # | Cenário | Status Esperado |
+|---|---|---|
+| 1 | Criar com dados válidos (admin) | 201 |
+| 2 | Criar com dados válidos (não-admin) | 201 |
+| 3 | Criar com email duplicado | 400 |
+| 4 | Criar sem campo nome | 400 |
+| 5 | Criar sem campo email | 400 |
+| 6 | Criar sem campo password | 400 |
+| 7 | Criar sem campo administrador | 400 |
+| 8 | Criar com corpo vazio | 400 |
+| 9 | Validar schema da resposta | 201 |
+
+### ✏️ Editar Usuário (`PUT /usuarios/{id}`)
+
+| # | Cenário | Status Esperado |
+|---|---|---|
+| 1 | Atualizar usuário existente | 200 |
+| 2 | Verificar persistência dos dados | 200 |
+| 3 | Criar via PUT (ID inexistente) | 201 |
+| 4 | Atualizar com email duplicado | 400 |
+| 5 | Atualizar sem campos obrigatórios | 400 |
+
+### 🗑️ Excluir Usuário (`DELETE /usuarios/{id}`)
+
+| # | Cenário | Status Esperado |
+|---|---|---|
+| 1 | Excluir usuário existente | 200 |
+| 2 | Verificar que foi excluído | 400 |
+| 3 | Excluir ID inexistente | 200 |
+| 4 | Excluir múltiplos usuários | 200 |
+
+### 🔄 Fluxo E2E Completo
+
+| # | Step | Descrição |
+|---|---|---|
+| 1 | Criar | POST /usuarios → 201 |
+| 2 | Login | POST /login → 200 |
+| 3 | Buscar | GET /usuarios/{id} → 200 |
+| 4 | Listar | GET /usuarios?_id=x → 200 |
+| 5 | Atualizar | PUT /usuarios/{id} → 200 |
+| 6 | Verificar | GET /usuarios/{id} → 200 |
+| 7 | Excluir | DELETE /usuarios/{id} → 200 |
+| 8 | Confirmar | GET /usuarios/{id} → 400 |
+
+**Total: 39 cenários de teste**
+
+---
+
+## ⚙️ CI/CD — GitHub Actions
+
+O projeto possui uma pipeline configurada em `.github/workflows/ci.yml` que é executada automaticamente em:
+
+- **Push** na branch `main`
+- **Pull Requests** para a branch `main`
+
+### O que a pipeline faz:
+
+1. ✅ Faz checkout do código
+2. ✅ Configura Node.js 20
+3. ✅ Instala dependências com `npm ci`
+4. ✅ Executa os testes com `npx cypress run`
+5. ✅ Mescla os relatórios JSON (Mochawesome)
+6. ✅ Gera relatório HTML
+7. ✅ Faz upload do relatório como **artefato da pipeline**
+
+### Acessando o Relatório na Pipeline:
+
+1. Vá até a aba **Actions** do repositório
+2. Clique na execução mais recente
+3. Na seção **Artifacts**, baixe o `test-report`
+4. Abra o arquivo `.html` no navegador
+
+---
+
+## 📊 Relatórios de Teste
+
+Os relatórios são gerados pelo **Mochawesome** em formato HTML com:
+
+- ✅ Resumo visual dos testes (passou/falhou)
+- ✅ Tempo de execução de cada teste
+- ✅ Detalhes de erros com stack trace
+- ✅ Gráficos de cobertura
+
+Para gerar localmente:
+
+```bash
+npm test
+npm run report
+```
+
+Abra `cypress/reports/html/report.html` no navegador.
+
+---
+
+## 👤 Autor
+
+**Rafael M. Sales**
+
+---
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.

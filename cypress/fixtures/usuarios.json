@@ -1,0 +1,43 @@
+{
+  "validUser": {
+    "nome": "Fulano da Silva",
+    "email": "fulano_fixture@qa.com.br",
+    "password": "teste123",
+    "administrador": "true"
+  },
+  "nonAdminUser": {
+    "nome": "Ciclano Souza",
+    "email": "ciclano_fixture@qa.com.br",
+    "password": "teste456",
+    "administrador": "false"
+  },
+  "updatedUser": {
+    "nome": "Fulano Atualizado",
+    "email": "fulano_updated@qa.com.br",
+    "password": "novaSenha123",
+    "administrador": "true"
+  },
+  "invalidUsers": {
+    "missingNome": {
+      "email": "sem_nome@qa.com.br",
+      "password": "teste123",
+      "administrador": "true"
+    },
+    "missingEmail": {
+      "nome": "Sem Email",
+      "password": "teste123",
+      "administrador": "true"
+    },
+    "missingPassword": {
+      "nome": "Sem Password",
+      "email": "sem_password@qa.com.br",
+      "administrador": "true"
+    },
+    "missingAdministrador": {
+      "nome": "Sem Admin",
+      "email": "sem_admin@qa.com.br",
+      "password": "teste123"
+    },
+    "emptyBody": {}
+  }
+}

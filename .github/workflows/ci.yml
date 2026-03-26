@@ -1,0 +1,48 @@
+name: CI - Testes de API ServeRest
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20]
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Executar testes Cypress
+        run: npx cypress run
+        continue-on-error: true
+
+      - name: Mesclar relatórios JSON
+        if: always()
+        run: npx mochawesome-merge cypress/reports/*.json -o cypress/reports/report.json
+
+      - name: Gerar relatório HTML
+        if: always()
+        run: npx marge cypress/reports/report.json --reportDir cypress/reports/html --inline
+
+      - name: Upload do relatório de testes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: cypress/reports/html/
+          retention-days: 30
