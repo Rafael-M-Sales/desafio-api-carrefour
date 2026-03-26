@@ -1,5 +1,15 @@
 const path = require('path');
 
+// Correção para caminhos com caracteres especiais como "(-_-)" no Windows
+const originalRegExp = RegExp;
+global.RegExp = function (pattern, flags) {
+    if (typeof pattern === 'string' && pattern.includes('(-_-)')) {
+        return new originalRegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), flags);
+    }
+    return new originalRegExp(pattern, flags);
+};
+global.RegExp.prototype = originalRegExp.prototype;
+
 exports.config = {
     runner: 'local',
     port: 4723,
@@ -21,7 +31,7 @@ exports.config = {
     waitforTimeout: 10000,
     connectionRetryTimeout: 120000,
     connectionRetryCount: 3,
-    services: ['appium'],
+    // services: ['appium'],
     framework: 'mocha',
     reporters: [
         'spec',

@@ -20,18 +20,22 @@ class HomePage extends Page {
      * Métodos de navegação para facilitar o reuso nos testes.
      */
     async goToLogin() {
+        await this.loginMenu.waitForDisplayed({ timeout: 20000 });
         await this.loginMenu.click();
     }
 
     async goToForms() {
+        await this.formsMenu.waitForDisplayed({ timeout: 20000 });
         await this.formsMenu.click();
     }
 
     async goToSwipe() {
+        await this.swipeMenu.waitForDisplayed({ timeout: 20000 });
         await this.swipeMenu.click();
     }
 
     async goToHome() {
+        await this.homeMenu.waitForDisplayed({ timeout: 20000 });
         await this.homeMenu.click();
     }
 }

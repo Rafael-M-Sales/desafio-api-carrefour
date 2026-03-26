@@ -28,6 +28,7 @@ class LoginPage extends Page {
      * @param {string} password 
      */
     async login(email, password) {
+        await this.emailInput.waitForDisplayed({ timeout: 20000 });
         await this.emailInput.setValue(email);
         await this.passwordInput.setValue(password);
         if (await browser.isKeyboardShown()) {

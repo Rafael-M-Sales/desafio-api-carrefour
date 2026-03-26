@@ -26,6 +26,7 @@ class FormsPage extends Page {
      * @param {string} text 
      */
     async fillForm(text) {
+        await this.inputField.waitForDisplayed({ timeout: 20000 });
         await this.inputField.setValue(text);
         if (await browser.isKeyboardShown()) {
             await browser.hideKeyboard();
