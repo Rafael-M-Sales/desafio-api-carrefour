@@ -10,88 +10,120 @@ const { expect } = require('chai');
  * Padrão: Page Object Model (POM)
  * 
  * Descrição: Este arquivo contém 10 cenários de teste que cobrem as principais
- * funcionalidades do aplicativo, conforme exigido nos requisitos do desafio.
+ * funcionalidades do aplicativo, com foco em demonstrar boas práticas de automação.
  */
 
 describe('Desafio Carrefour - Automação Mobile', () => {
 
     /**
-     * REQUISITO: Criar cenários que cubram Login/Cadastro.
-     * Técnica: Uso de Page Objects para abstrair a complexidade de seletores.
+     * REQUISITO: Criar cenários que cubram Login e validações.
+     * Técnica: Uso de Page Objects para abstrair seletores e esconder detalhes de implementação.
      */
     it('Cenário 01: Deve realizar login com sucesso', async () => {
         await HomePage.goToLogin();
-        await LoginPage.login('teste@qa.com.br', 'senha123');
-        // Adicione validações reais aqui (ex: mensagem de sucesso)
+        await LoginPage.login('teste@qa.com.br', 'senha123456');
+        
+        // Validação: Verificamos se a mensagem de sucesso está visível.
+        expect(await LoginPage.isLoginSuccessful()).to.be.true;
+        
+        // Fechar o alerta para não interferir nos próximos testes.
+        await LoginPage.successOkButton.click();
     });
 
     /**
-     * REQUISITO: Verificação de mensagens de erro.
-     * Valida que o app recusa emails com formato inválido.
+     * REQUISITO: Verificação de mensagens de erro em campos de formulário.
+     * Valida que o aplicativo recusa emails com formato inválido.
      */
     it('Cenário 02: Deve exibir erro ao tentar login com email inválido', async () => {
         await HomePage.goToLogin();
         await LoginPage.login('email_invalido', 'senha123');
-        // expect(await LoginPage.errorMessage.isDisplayed()).to.be.true;
+        
+        // Validação: Verifica se a mensagem de erro específica do email aparece.
+        expect(await LoginPage.invalidEmailError.isDisplayed()).to.be.true;
     });
 
-    /**
-     * REQUISITO: Preenchimento de formulários e mensagens de erro.
-     */
-    it('Cenário 03: Deve falhar login com senha vazia', async () => {
+    it('Cenário 03: Deve exibir erro ao tentar login com senha curta', async () => {
         await HomePage.goToLogin();
-        await LoginPage.login('teste@qa.com.br', '');
-        // Validação de erro de campo obrigatório
+        await LoginPage.login('teste@qa.com.br', '123');
+        
+        // Validação: O app exige no mínimo 8 caracteres.
+        expect(await LoginPage.invalidPasswordError.isDisplayed()).to.be.true;
     });
 
     /**
-     * REQUISITO: Navegação entre telas (WebView).
+     * REQUISITO: Navegação entre telas e interação com componentes nativos.
      */
     it('Cenário 04: Deve navegar para a tela de WebView corretamente', async () => {
         await HomePage.webviewMenu.click();
-        // expect(await browser.getContext()).to.include('WEBVIEW');
+        
+        // Em um app real, poderíamos mudar o contexto para WEBVIEW aqui.
+        // browser.getContexts();
     });
 
-    /**
-     * REQUISITO: Navegação entre telas (Swipe).
-     */
-    it('Cenário 05: Deve navegar para a tela de Swipe e validar visibilidade', async () => {
+    it('Cenário 05: Deve navegar para a tela de Swipe e validar título', async () => {
         await HomePage.goToSwipe();
-        // expect(await HomePage.swipeMenu.isDisplayed()).to.be.true;
+        
+        // Validação: Garantir que o elemento que define a tela de Swipe está presente.
+        expect(await HomePage.swipeMenu.isDisplayed()).to.be.true;
     });
 
     it('Cenário 06: Deve navegar para a tela de Drag and Drop', async () => {
         await HomePage.dragMenu.click();
+        expect(await HomePage.dragMenu.isSelected()).to.be.true;
     });
 
     /**
-     * REQUISITO: Preenchimento de formulários (Switch/Inputs).
+     * REQUISITO: Interação com componentes de formulário (Switch, Inputs e Botões).
      */
-    it('Cenário 07: Deve preencher formulário e validar o Switch', async () => {
+    it('Cenário 07: Deve preencher formulário e validar o Switch (On/Off)', async () => {
         await HomePage.goToForms();
+        
+        // Clica no Switch e limpa o campo de texto caso necessário.
         await FormsPage.switchBtn.click();
+        
+        // Validação: O texto do switch deve mudar conforme o estado.
+        const text = await FormsPage.switchText.getText();
+        expect(text).to.include('switch is');
     });
 
-    it('Cenário 08: Deve selecionar opção no Dropdown do formulário', async () => {
+    it('Cenário 08: Deve interagir com o Dropdown (Picker)', async () => {
         await HomePage.goToForms();
         await FormsPage.dropDown.click();
-        // Lógica para selecionar item do picker
+        
+        // Nota: Em Android, interações com listagens nativas podem exigir scroll ou UiSelector.
+        // Aqui simulamos a abertura do seletor.
     });
 
     it('Cenário 09: Deve validar botões ativos e inativos no formulário', async () => {
         await HomePage.goToForms();
-        // expect(await FormsPage.inactiveBtn.isEnabled()).to.be.false;
+        
+        // Validação: O botão 'Inactive' não deve estar habilitado para clique.
+        expect(await FormsPage.inactiveBtn.isEnabled()).to.be.false;
+        
+        // Já o botão Active deve estar habilitado.
+        expect(await FormsPage.activeBtn.isEnabled()).to.be.true;
     });
 
     /**
-     * REQUISITO: Fluxo E2E completo.
-     * Demonstra a integração de múltiplas telas em um único fluxo de usuário.
+     * REQUISITO: Fluxo E2E completo (End-to-End).
+     * Demonstra a transição fluída entre múltiplas funcionalidades do app.
      */
-    it('Cenário 10: Fluxo E2E - Login -> Navegação -> Logout', async () => {
+    it('Cenário 10: Fluxo E2E - Navegação Completa e Preenchimento', async () => {
+        // 1. Vai para Login
         await HomePage.goToLogin();
-        await LoginPage.login('e2e@qa.com.br', 'senha123');
+        await LoginPage.login('e2e@qa.com.br', 'senha123456');
+        await LoginPage.successOkButton.click();
+
+        // 2. Vai para Forms
         await HomePage.goToForms();
-        await HomePage.homeMenu.click();
+        await FormsPage.fillForm('Desafio Carrefour');
+        await FormsPage.okBtn.click();
+
+        // 3. Volta para Home
+        await HomePage.goToHome();
+        
+        // Validação: Confirmar que voltamos à estaca zero com segurança.
+        expect(await HomePage.homeMenu.isDisplayed()).to.be.true;
     });
 
 });

@@ -1,23 +1,38 @@
 const Page = require('./page');
 
+/**
+ * DESAFIO CARREFOUR - Page Object Home
+ * 
+ * Requisito: Organizar a navegação principal do aplicativo (Tabs/Menu inferior).
+ */
 class HomePage extends Page {
+    /**
+     * Seletores para o menu de navegação inferior.
+     */
+    get homeMenu() { return $('~Home'); }
+    get webviewMenu() { return $('~Webview'); }
     get loginMenu() { return $('~Login'); }
     get formsMenu() { return $('~Forms'); }
-    get webviewMenu() { return $('~Webview'); }
     get swipeMenu() { return $('~Swipe'); }
     get dragMenu() { return $('~Drag'); }
-    get homeMenu() { return $('~Home'); }
 
+    /**
+     * Métodos de navegação para facilitar o reuso nos testes.
+     */
     async goToLogin() {
-        await (await this.loginMenu).click();
+        await this.loginMenu.click();
     }
 
     async goToForms() {
-        await (await this.formsMenu).click();
+        await this.formsMenu.click();
     }
 
     async goToSwipe() {
-        await (await this.swipeMenu).click();
+        await this.swipeMenu.click();
+    }
+
+    async goToHome() {
+        await this.homeMenu.click();
     }
 }
 

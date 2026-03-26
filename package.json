@@ -7,9 +7,11 @@
   "scripts": {
     "test": "npx cypress run",
     "test:headed": "npx cypress open",
+    "test:mobile": "cd mobile && npm test",
     "report:merge": "npx mochawesome-merge cypress/reports/*.json -o cypress/reports/report.json",
     "report:generate": "npx marge cypress/reports/report.json --reportDir cypress/reports/html --inline --reportFilename report",
-    "report": "npm run report:merge && npm run report:generate"
+    "report": "npm run report:merge && npm run report:generate",
+    "report:mobile": "cd mobile && npm run report:generate"
   },
   "devDependencies": {
     "cypress": "^13.17.0",

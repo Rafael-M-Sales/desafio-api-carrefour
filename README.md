@@ -72,6 +72,12 @@ npm test
 npm run test:headed
 ```
 
+### Executar testes Mobile (WebDriverIO + Appium)
+
+```bash
+npm run test:mobile
+```
+
 ### Executar testes de um arquivo específico
 
 ```bash
@@ -84,6 +90,12 @@ npx cypress run --spec cypress/e2e/usuarios-post.cy.js
 ```bash
 npm test
 npm run report
+```
+
+### Gerar relatório Mobile (Allure)
+
+```bash
+npm run report:mobile
 ```
 
 O relatório será gerado em `cypress/reports/html/`.
