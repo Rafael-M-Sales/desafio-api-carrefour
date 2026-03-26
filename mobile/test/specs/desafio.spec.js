@@ -1,3 +1,6 @@
+const LoginPage = require('../pageobjects/login.page');
+const HomePage = require('../pageobjects/home.page');
+const FormsPage = require('../pageobjects/forms.page');
 const { expect } = require('chai');
 
 /**
