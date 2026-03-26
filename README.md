@@ -96,17 +96,30 @@ O relatório será gerado em `cypress/reports/html/`.
 desafio-api-carrefour/
 ├── .github/
 │   └── workflows/
-│       └── ci.yml                   # Pipeline GitHub Actions
+│       └── ci.yml                   # Pipeline GitHub Actions (API)
 ├── cypress/
 │   ├── e2e/                         # Testes de API (Cypress)
-│   └── ...
+│   │   ├── login.cy.js              # Testes POST /login
+│   │   ├── usuarios-get.cy.js       # Testes GET /usuarios
+│   │   ├── usuarios-post.cy.js      # Testes POST /usuarios
+│   │   ├── usuarios-put.cy.js       # Testes PUT /usuarios/{id}
+│   │   ├── usuarios-delete.cy.js    # Testes DELETE /usuarios/{id}
+│   │   └── usuarios-e2e.cy.js       # Fluxo E2E completo (CRUD)
+│   ├── fixtures/                    # Massa de dados
+│   └── support/                     # Comandos e suporte
 ├── mobile/                          # Testes Mobile (WebDriverIO)
 │   ├── test/
-│   │   ├── pageobjects/             # Padrão Page Object
-│   │   └── specs/                   # 10 Cenários de Teste
+│   │   ├── pageobjects/             # Page Object Model
+│   │   │   ├── page.js
+│   │   │   ├── login.page.js
+│   │   │   ├── home.page.js
+│   │   │   └── forms.page.js
+│   │   └── specs/
+│   │       └── desafio.spec.js      # 10 Cenários Mobile
+│   ├── app/                         # Pasta para o APK
 │   └── wdio.conf.js                 # Configuração Appium
-├── cypress.config.js
-├── package.json
+├── cypress.config.js                # Configuração do Cypress
+├── package.json                     # Dependências globais
 ├── .gitignore
 └── README.md
 ```
@@ -193,7 +206,22 @@ Este projeto foi construído com um **viés pedagógico**. Cada arquivo de teste
 | 7 | Excluir | DELETE /usuarios/{id} → 200 |
 | 8 | Confirmar | GET /usuarios/{id} → 400 |
 
-**Total: 39 cenários de teste**
+### 📱 Automação Mobile (`Native Demo App`)
+
+| # | Cenário | Funcionalidade | Descrição |
+|---|---|---|---|
+| 1 | Login com Sucesso | Autenticação | Login válido com dados de QA |
+| 2 | Login com Erro (Email) | Autenticação | Validação de formato de email inválido |
+| 3 | Login com Erro (Senha) | Autenticação | Tentativa de login com senha vazia |
+| 4 | Navegação WebView | Navegação | Acesso à tela de conteúdo web |
+| 5 | Navegação Swipe | Navegação | Acesso e interação com a tela de swipe |
+| 6 | Navegação Drag | Navegação | Acesso à tela de Drag and Drop |
+| 7 | Form: Switch | Formulários | Interação com componente Switch |
+| 8 | Form: Dropdown | Formulários | Seleção de itens no picker |
+| 9 | Form: Status | Formulários | Validação de botões ativos/inativos |
+| 10 | Fluxo E2E Completo | E2E | Login -> Menu -> App -> Home |
+
+**Total Geral: 49 cenários de teste (39 API + 10 Mobile)**
 
 ---
 
