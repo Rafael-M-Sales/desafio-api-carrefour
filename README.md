@@ -1,6 +1,24 @@
 # 🧪 Desafio de Automação de Testes de API — Carrefour Banco
 
+![CI](https://github.com/Rafael-M-Sales/desafio-api-carrefour/actions/workflows/ci.yml/badge.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Cypress](https://img.shields.io/badge/-cypress-%23E9E9E9?style=flat&logo=cypress&logoColor=17202C)
+![WebdriverIO](https://img.shields.io/badge/-webdriverio-%23EA5906?style=flat&logo=webdriverio&logoColor=white)
+
 Projeto de automação de testes para a API [ServeRest](https://serverest.dev), desenvolvido como parte do desafio técnico do **Carrefour Banco**. O projeto cobre testes automatizados para os endpoints de **Usuários** e **Login**, com pipeline de CI/CD e geração de relatórios.
+
+## 🏗️ Arquitetura do Projeto
+
+```mermaid
+graph TD
+    A[GitHub Repo] --> B{CI/CD GitHub Actions}
+    B --> C[API Tests: Cypress]
+    B --> D[Mobile Tests: WDIO + Appium]
+    C --> E[Mochawesome Report]
+    D --> F[Allure Report]
+    E --> G[GitHub Pages / Artifacts]
+    F --> G
+```
 
 ---
 
