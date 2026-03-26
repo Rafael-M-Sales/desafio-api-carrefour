@@ -1,5 +1,9 @@
 const Page = require('./page');
 
+/**
+ * DESAFIO CARREFOUR - Page Object de Login
+ * Responsável por centralizar seletores e ações da tela de autenticação.
+ */
 class LoginPage extends Page {
     /**
      * Seletores (usando Accessiblity ID para melhores práticas mobile)
