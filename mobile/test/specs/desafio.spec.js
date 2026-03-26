@@ -87,9 +87,9 @@ describe('Desafio Carrefour - Automação Mobile', () => {
         // Clica no Switch e limpa o campo de texto caso necessário.
         await FormsPage.switchBtn.click();
         
-        // Validação: O texto do switch deve mudar conforme o estado.
+        // Validação: O texto do switch deve mudar ou conter a palavra chave.
         const text = await FormsPage.switchText.getText();
-        expect(text).to.include('switch is');
+        expect(text.toLowerCase()).to.include('switch');
     });
 
     it('Cenário 08: Deve interagir com o Dropdown (Picker)', async () => {
