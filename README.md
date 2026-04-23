@@ -283,38 +283,6 @@ O projeto possui uma pipeline configurada em `.github/workflows/ci.yml` que é e
 
 ---
 
-## 📱 Automação Mobile (NOVO)
-
-Além dos testes de API, o projeto agora conta com uma suíte de **10 cenários de testes mobile** utilizando **WebDriverIO** e **Appium**.
-
-### Estrutura Mobile
-O código está localizado na pasta `mobile/` e segue o padrão **Page Object Model (POM)**.
-
-### Pré-requisitos Mobile
-- **Appium Server** instalado e rodando (v2.0+)
-- **Android SDK** configurado e um emulador ativo.
-- **Java JDK** (v11+)
-- **APK do App**: [Download WebdriverIO Native Demo App](https://github.com/webdriverio/native-demo-app/releases) (coloque o arquivo em `mobile/app/wdio-demo.apk`).
-
-### Como executar os testes Mobile
-1.  **Acesse a pasta mobile:**
-    ```bash
-    cd mobile
-    ```
-2.  **Instale as dependências:**
-    ```bash
-    npm install
-    ```
-3.  **Execute os testes:**
-    ```bash
-    npm test
-    ```
-4.  **Gere o relatório Allure:**
-    ```bash
-    npm run report:generate
-    npm run report:open
-    ```
-
 ---
 
 ## 👤 Autor

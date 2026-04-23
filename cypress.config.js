@@ -1,3 +1,4 @@
+
 const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
@@ -5,6 +6,11 @@ module.exports = defineConfig({
     baseUrl: 'https://serverest.dev',
     supportFile: 'cypress/support/e2e.js',
     specPattern: 'cypress/e2e/**/*.cy.js',
+    experimentalRunAllSpecs: true,
+    env: {
+      adminEmail: 'fulano@qa.com.br',
+      adminPassword: 'teste'
+    },
     // Desabilitar interface gráfica para testes de API
     video: false,
     screenshotOnRunFailure: false,
