@@ -90,8 +90,12 @@ Cypress.Commands.add('loginAsAdmin', () => {
 Cypress.Commands.add('deleteUser', (userId) => {
   return cy.api({
     method: 'DELETE',
-    url: `/usuarios/${userId}`,
-    failOnStatusCode: false
+    url: `/usuarios/${userId}`
+  }).then((response) => {
+    return {
+      status: response.status,
+      message: response.body.message
+    }
   })
 })
 

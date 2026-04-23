@@ -8,8 +8,8 @@ module.exports = defineConfig({
     specPattern: 'cypress/e2e/**/*.cy.js',
     experimentalRunAllSpecs: true,
     env: {
-      adminEmail: 'fulano@qa.com.br',
-      adminPassword: 'teste'
+      // Credenciais são lidas de cypress.env.json localmente 
+      // ou de variáveis de ambiente no GitHub Actions
     },
     // Desabilitar interface gráfica para testes de API
     video: false,

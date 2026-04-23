@@ -29,6 +29,10 @@ jobs:
 
       - name: Executar testes Cypress
         run: npx cypress run
+        env:
+          # Segredos configurados no GitHub > Settings > Secrets and variables
+          CYPRESS_adminEmail: ${{ secrets.ADMIN_EMAIL }}
+          CYPRESS_adminPassword: ${{ secrets.ADMIN_PASSWORD }}
         continue-on-error: true
 
       - name: Mesclar relatórios JSON

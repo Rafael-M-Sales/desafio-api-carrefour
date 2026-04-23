@@ -4,6 +4,7 @@ cypress/screenshots/
 cypress/videos/
 cypress/downloads/
 .env
+cypress.env.json
 
 # Mobile
 mobile/node_modules/
